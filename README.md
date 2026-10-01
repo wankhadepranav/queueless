@@ -1,144 +1,54 @@
-\# Queueless — Queue Management System
+# Queueless — Queue Management System
 
+Queueless is a Spring Boot REST backend for digital queue management. Customers can register, join service queues, track their tickets, and cancel waiting tickets. Staff can call the next customer and complete or cancel tickets, while administrators can manage users, services, and queues.
 
+The project uses JWT authentication, role-based authorization, JPA/Hibernate persistence, and MySQL for application data.
 
-Queueless is a Spring Boot-based queue management system that allows customers to join service queues and track their queue status while staff members manage tickets and administrators manage users, services, and queues.
+## Features
 
+### Customer
 
+- Register and log in
+- Join an available service queue
+- Receive an automatically generated ticket number
+- View queue position and people ahead
+- View estimated waiting time
+- Track ticket status
+- Cancel a waiting ticket
 
-\## Features
+### Staff
 
+- Log in with staff credentials
+- View live queues
+- See waiting customers and the next ticket
+- Call the next waiting customer
+- Complete served tickets
+- Cancel tickets when required
+- Review recent ticket activity
 
+### Admin
 
-\- User registration and login
+- Manage users
+- Manage services
+- Manage queues
+- Perform staff-level queue operations
 
-\- JWT-based authentication
-
-\- BCrypt password hashing
-
-\- Role-based authorization
-
-\- Customer queue joining
-
-\- Automatic ticket/token generation
-
-\- Queue position tracking
-
-\- Estimated waiting time
-
-\- Queue status tracking
-
-\- Staff call-next functionality
-
-\- Ticket completion and cancellation
-
-\- Queue management
-
-\- Service management
-
-\- User management
-
-
-
-\## User Roles
-
-
-
-\### CUSTOMER
-
-\- Login
-
-\- Join a queue
-
-\- View ticket position
-
-\- View estimated waiting time
-
-\- View ticket status
-
-\- Cancel a waiting ticket
-
-
-
-\### STAFF
-
-\- Login
-
-\- Call the next waiting customer
-
-\- Complete tickets
-
-\- Perform queue operations
-
-
-
-\### ADMIN
-
-\- Manage users
-
-\- Manage services
-
-\- Manage queues
-
-\- Perform staff-level operations
-
-
-
-\## Tech Stack
-
-
-
-\- Java 21
-
-\- Spring Boot
-
-\- Spring Web
-
-\- Spring Data JPA
-
-\- Hibernate
-
-\- MySQL
-
-\- Spring Security Crypto
-
-\- BCrypt
-
-\- JWT
-
-\- Maven
-
-
-
-\## Architecture
-
-
+## Queue Flow
 
 ```text
-
-Client
-
-&#x20; |
-
-&#x20; v
-
-REST Controllers
-
-&#x20; |
-
-&#x20; v
-
-Service Layer
-
-&#x20; |
-
-&#x20; v
-
-JPA Repositories
-
-&#x20; |
-
-&#x20; v
-
-MySQL Database
-
+Customer
+   |
+   | Join service queue
+   v
+Ticket created
+   |
+   v
+Waiting in queue
+   |
+   | Staff: Call next
+   v
+Currently called / Served
+   |
+   +----> Complete ----> COMPLETED
+   |
+   +----> Cancel ------> CANCELLED
